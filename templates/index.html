@@ -1,0 +1,26 @@
+{% extends "bootstrap/base.html" %}
+
+			{% block body %}
+
+<div >
+	<h1 align= "center"> Greetings Sir! </h1>
+	<br><br><br><br>
+	
+	<h3><a style="color:#e5474b;" href= "{{ url_for('form') }}"> Click here </a> to visit the 1st page of the the multi pages form. 
+	<br>
+	<h3>About the multi-page form </h3>
+	<ul>
+		<li> I have coded it using sessions in flask </li>
+		<li>All the data is being stored in the sessions before sending it to the database. </li>
+		<li>User can't just skip to 2nd or 3rd page of the form untill he has filled the previous page. </li>
+		<li> If you try to reload the web page that you are redirected to after submitting the form,
+			the use will be told to fill the form again. Hence the session is popped out. This is done so that the user doesn't spam the database by just reloading. </li>
+	</ul>
+
+
+
+
+	
+</div>
+
+{% endblock %}

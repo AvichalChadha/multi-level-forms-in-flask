@@ -1,0 +1,22 @@
+{% extends "bootstrap/base.html" %}
+
+
+{% block title %}
+After form submission.
+{% endblock %}
+
+
+{% block content %}
+<h4>
+All the data has been sent to the SQL db.
+<a>
+
+
+    <a style="color:#e5474b;" href= "{{ url_for('submitted_posts') }}"> Click here </a> to view the details from the filled form
+        <br><br>
+</h4>
+
+
+
+{% endblock %}
+

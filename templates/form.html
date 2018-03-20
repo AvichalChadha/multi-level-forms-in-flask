@@ -1,0 +1,40 @@
+{% extends "bootstrap/base.html" %}  
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block title %}
+Form Page 1
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+
+
+        <form method="POST" action="/form">
+            {{ form.csrf_token }}
+           
+                {{ wtf.form_field(form.name) }}
+                
+           
+                {{ wtf.form_field(form.age) }}
+                {{ wtf.form_field(form.email) }}
+            
+            
+          
+                
+                {{ wtf.form_field(form.HomeAdress) }}
+           
+            
+            <input class="btn btn-primary" type="submit" value="Next">
+        </form>
+
+
+	
+
+
+
+{% endblock %}

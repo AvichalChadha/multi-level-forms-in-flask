@@ -1,0 +1,52 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+User Posts Collection
+{% endblock %}
+
+
+{% block content %}
+
+
+{% for post in dbData %}
+
+
+                       
+  <h2> Your Name:{{ post.name }}</h2>
+<font size="4">
+    <b>Your email:</b>{{ post.email }} <br>
+    <b>age :</b> {{ post.age }} <br>
+    <b>Your Office Address:</b> {{ post.officeAdress }} <br>
+    <b>Your phoneNumber:</b>{{ post.phoneNumber }} <br>
+    <b>Your favorite car:</b>{{ post.car }}  <br>
+    <b>Favorite TV show:</b>{{ post.tvshow }} <br>
+    <b>Favorite Car:</b>{{ post.car }} <br>
+    <b>Your favorite phone:</b> {{ post.favPhone }} <br>
+    <b>Your favorite colour:</b> {{ post.color }} <br>
+   <br><br><br>
+
+
+
+</font>
+                  
+
+
+<br>
+
+<h4 style="color: #717171">{{ post.description }}</h4>
+
+<hr>
+{% endfor %}
+        
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
