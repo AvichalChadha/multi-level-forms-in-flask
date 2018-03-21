@@ -1,6 +1,4 @@
-##change the validators of age to number 
-## del the sql table and add new one
-## chnage the validators and limit of text allowed. 
+
 
 from flask import Flask, render_template , redirect ,session,  url_for, request, make_response
 
@@ -32,9 +30,9 @@ app.config['SECRET_KEY'] = "some_string"
 class posts(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80))   #
-    book = db.Column(db.String(80))  # book is not used anywhere 
-    age = db.Column(db.String(2))   # 
+    name = db.Column(db.String(80))  
+
+    age = db.Column(db.String(2))   
     tvshow = db.Column(db.String(80))
     color = db.Column(db.String(30))
     car= db.Column(db.String(80))
@@ -47,7 +45,7 @@ class posts(db.Model):
 #For 1st page of form 
 class Post_Form(Form):
     name = TextField('Your Name',validators=[InputRequired(), Length(min=5, max=60, message="The field must be between 5 and 80 characters long")],render_kw={"placeholder": "Your Name"})
-    age= TextField("Your Age", validators=[InputRequired()],render_kw={"placeholder": "Age"})
+    age= TextField("Your Age", validators=[InputRequired(), Length(min=1, max=2, message="The field must be between 1 to 2 characters long")],render_kw={"placeholder": "Age"})
     email = TextField("Email Address",validators=[InputRequired(),Email(message='Enter a valid email'), Length(min=10, max=90)],render_kw={"placeholder": "Your Email Address"}) 
     HomeAdress = TextField("your home address",validators=[InputRequired(), Length(min=3, max=80, message="The field must be between 5 and 80 characters long")],render_kw={"placeholder": "enter your home address"}) # name of the author
     
@@ -61,18 +59,12 @@ class form2(Form):
 
 ##for 3rd page of form 
 class form3(Form):
-    favPhone = TextField('Your favourite phone', validators=[InputRequired(), Length(min=5, max=70, message="The field must be between 5 and 70 characters long")] ,render_kw={"placeholder": "your favourite phone"})
+    favPhone = TextField('Your favourite phone', validators=[InputRequired(), Length(min=2, max=70, message="The field must be between 2 and 70 characters long")] ,render_kw={"placeholder": "your favourite phone"})
     car = TextField('Your favourite car', validators=[InputRequired(), Length(min=5, max=80, message="The field must be between 5 and 80 characters long")] ,render_kw={"placeholder": "your favourite car"})
-    color = TextField('Your favourite colour', validators=[InputRequired(), Length(min=5, max=30, message="The field must be between 5 and 30 characters long")] ,render_kw={"placeholder": "your favourite colour"})
+    color = TextField('Your favourite colour', validators=[InputRequired(), Length(min=2, max=30, message="The field must be between 2 and 30 characters long")] ,render_kw={"placeholder": "your favourite colour"})
     
     
     
-#To give the random endpoint to the url
-def randomword(length):
-   letters = string.ascii_lowercase
-   return ''.join(random.choice(letters) for i in range(length))
-
-
 
 
 
@@ -84,8 +76,7 @@ def form():
         return render_template('form.html', form=form)
     elif request.method == "POST":
         if form.validate_on_submit():
-            url_genrator = randomword(5)
-            postedDate = datetime.utcnow().strftime("%d-%m-%y")
+
             session['name'] = form.name.data
             session['age'] = form.age.data
             session['email'] = form.email.data
@@ -138,17 +129,16 @@ def form_3():
 def form_submitted():
     if 'color' in session:
         
-        d = session['age']
-        e = session['tvshow']
-        f = session['color']
-        g = session['car']
-        #h = session['HomeAdress']
-        i = session['email']
-        j = session['officeAdress']
-        k = session['phoneNumber']
-        l = session['favPhone']
-        b = session['name']
-        Data = posts(name=b , age= d, tvshow= e , color= f , car= g,  email= i, officeAdress= j, phoneNumber= k, favPhone= l  )
+        age = session['age']
+        tvshow = session['tvshow']
+        color = session['color']
+        car = session['car']
+        email = session['email']
+        officeAdress = session['officeAdress']
+        phoneNumber = session['phoneNumber']
+        favPhone = session['favPhone']
+        name = session['name']
+        Data = posts(name=name, age=age, tvshow= tvshow , color= color, car=car ,  email=email , officeAdress=officeAdress , phoneNumber= phoneNumber, favPhone= favPhone  )
         db.session.add(Data)
         db.session.commit()
         session.pop('name', None)
@@ -171,12 +161,6 @@ def submitted_posts():
 
 
 
-#this endpoint will the specific post and the post will have a randon endpoint
-@app.route('/guest-post/<random_id>')
-def guest_post(random_id):
-    article = posts.query.filter_by(random=random_id ).one()
-    return render_template ('guest_post.html', post = article)
-    
 @app.route('/')
 def index():
     return render_template ('index.html')
